@@ -43,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3C05F20D29CEC6C600CBB6D6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3C186B1329CEC1B7009100C9 /* magic8ball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = magic8ball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C186B1629CEC1B7009100C9 /* magic8ballApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = magic8ballApp.swift; sourceTree = "<group>"; };
 		3C186B1829CEC1B7009100C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 		3C186B0A29CEC1B7009100C9 = {
 			isa = PBXGroup;
 			children = (
+				3C05F20D29CEC6C600CBB6D6 /* .gitignore */,
 				3C186B1529CEC1B7009100C9 /* magic8ball */,
 				3C186B2729CEC1B7009100C9 /* magic8ball Watch App */,
 				3C186B1429CEC1B7009100C9 /* Products */,

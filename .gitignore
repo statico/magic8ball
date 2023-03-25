@@ -1,0 +1,22 @@
+# Xcode
+.DS_Store
+*/build/*
+*/DerivedData/*
+*/xcuserdata/*
+
+# Swift
+*/Pods/*
+*/Carthage/*
+
+# macOS
+*.swp
+*.lock
+
+# Apple Watch
+xcuserdata
+project.xcworkspace/xcuserdata
+
+# Other
+*.log
+*.bak
+
