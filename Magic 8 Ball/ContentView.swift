@@ -25,6 +25,7 @@ struct ContentView: View {
   @State private var animationYOffset = 0.0
   @State private var animationScale = 1.0
   @State private var lastShakeTime = Date.distantPast
+  @State var ball = Ball(scene: SCNScene(named: "abstract_ball.dae")!)
 
   let motionManager = CMMotionManager()
   let motionQueue = OperationQueue()
@@ -32,7 +33,7 @@ struct ContentView: View {
   var body: some View {
     ZStack {
       ShakeViewRepresentable().allowsHitTesting(false)
-      Ball(scene: SCNScene(named: "abstract_ball.dae")!)
+      ball.frame(width: 300, height: 300)
       VStack {
         Spacer()
         Text(message)
@@ -48,6 +49,7 @@ struct ContentView: View {
     }
     .gesture(TapGesture().onEnded {
       print("got tap gesture")
+      ball.spinBall()
       shake()
     })
     .onReceive(messagePublisher) { _ in
