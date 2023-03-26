@@ -16,6 +16,7 @@ let answers = ["It is certain", "It is decidedly so", "Without a doubt", "Yes de
 
 struct ContentView: View {
   @State private var message = ""
+  @State private var isActive = false
   @State private var hasShaken = false
   @State private var timer: Timer?
   @State private var animationAngle = Angle.degrees(0.0)
@@ -49,11 +50,14 @@ struct ContentView: View {
       initAudio()
     }
     .onTapGesture {
+      guard isActive else { return }
       shake()
     }
     .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationDidBecomeActiveNotification)) { _ in
-      print("XXXXXXXXX did become active")
+      print("did become active")
+      isActive = true
       motionManager.startAccelerometerUpdates(to: motionQueue) { data, _ in
+        guard isActive else { return }
         guard let data = data else { return }
         let magnitude = sqrt(pow(data.acceleration.x, 2) + pow(data.acceleration.y, 2) + pow(data.acceleration.z, 2))
         if magnitude > 2.0 {
@@ -69,12 +73,9 @@ struct ContentView: View {
       }
     }
     .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationWillResignActiveNotification)) { _ in
-      print("XXXXXXXXX will resign")
+      print("will resign")
+      isActive = false
       message = ""
-      animationAngle = Angle.degrees(0.0)
-      animationXOffset = 0.0
-      animationYOffset = 0.0
-      animationScale = 1.0
       motionManager.stopAccelerometerUpdates()
       timer?.fire()
       timer?.invalidate()
@@ -94,15 +95,15 @@ struct ContentView: View {
         audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
         audioPlayer.enableRate = true
       } catch {
-        print("Error playing sound: \(error.localizedDescription)")
+        print("error playing sound: \(error.localizedDescription)")
       }
     } else {
-      print("Error: sound file not found")
+      print("error: sound file not found")
     }
   }
 
   func shake() {
-    print("XXXXXXXXX shake()")
+    print("shake()")
     hasShaken = true
     message = ""
     animationAngle = Angle.degrees(hasShaken ? Double.random(in: -20...20) : 0)
@@ -114,12 +115,12 @@ struct ContentView: View {
     timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
       let index = Int(arc4random_uniform(UInt32(answers.count)))
       message = answers[index]
-      print("XXXXXXXXX timer message=\(message)")
+      print("timer message=\(message)")
     }
 
     audioSession.activate(options: []) { success, error in
       guard error == nil else {
-        print("Error: \(error!.localizedDescription)")
+        print("error: \(error!.localizedDescription)")
         return
       }
       if success {
