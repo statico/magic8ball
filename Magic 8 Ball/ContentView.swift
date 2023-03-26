@@ -26,13 +26,9 @@ struct ContentView: View {
   @State private var animationScale = 1.0
   @State private var lastShakeTime = Date.distantPast
   @State private var ballView = BallView(
-    scene: SCNScene(named: "Magic_8_Ball_with_Dice.usdz")!,
-    childNodeName: "Full8Ball"
-  ) { scene in
-    let dice = scene.rootNode.childNode(withName: "Dice", recursively: true)
-    dice?.removeFromParentNode()
-    return scene
-  }
+    scene: SCNScene(named: "Eight_Ball.usdz")!,
+    childNodeName: "Billard_Ball"
+  )
 
   let motionManager = CMMotionManager()
   let motionQueue = OperationQueue()
