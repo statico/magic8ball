@@ -17,6 +17,11 @@ let answers = ["It is certain", "It is decidedly so", "Without a doubt", "Yes de
 struct ContentView: View {
   @State private var message = ""
   @State private var hasShaken = false
+  @State private var timer: Timer?
+  @State private var animationAngle = Angle.degrees(0.0)
+  @State private var animationXOffset = 0.0
+  @State private var animationYOffset = 0.0
+  @State private var animationScale = 0.0
 
   let motionManager = CMMotionManager()
   let motionQueue = OperationQueue()
@@ -27,13 +32,10 @@ struct ContentView: View {
         .resizable()
         .scaledToFit()
         .scaledToFill()
-        .rotationEffect(Angle.degrees(hasShaken ? Double.random(in: -20...20) : 0))
-        .offset(
-          x: hasShaken ? CGFloat.random(in: -20...20) : 0,
-          y: hasShaken ? CGFloat.random(in: -20...20) : 0
-        )
-        .scaleEffect(1.0 + (hasShaken ? CGFloat.random(in: -0.1...0.1) : 0))
-        .animation(.interpolatingSpring(mass: 1, stiffness: 200, damping: 5, initialVelocity: 0), value: message)
+        .rotationEffect(animationAngle)
+        .offset(x: animationXOffset, y: animationYOffset)
+        .scaleEffect(animationScale)
+        .animation(.interpolatingSpring(mass: 1, stiffness: 200, damping: 5, initialVelocity: 0), value: timer)
       VStack {
         Spacer()
         Text(message)
@@ -84,9 +86,17 @@ struct ContentView: View {
 
   func shake() {
     hasShaken = true
+    message = ""
+    animationAngle = Angle.degrees(hasShaken ? Double.random(in: -20...20) : 0)
+    animationXOffset = hasShaken ? CGFloat.random(in: -20...20) : 0
+    animationYOffset = hasShaken ? CGFloat.random(in: -20...20) : 0
+    animationScale = 1.0 + (hasShaken ? CGFloat.random(in: -0.1...0.1) : 0)
 
-    let index = Int(arc4random_uniform(UInt32(answers.count)))
-    message = answers[index]
+    timer?.invalidate()
+    timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+      let index = Int(arc4random_uniform(UInt32(answers.count)))
+      message = answers[index]
+    }
 
     audioSession.activate(options: []) { success, error in
       guard error == nil else {
