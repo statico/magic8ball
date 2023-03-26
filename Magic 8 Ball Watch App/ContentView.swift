@@ -36,7 +36,9 @@ struct ContentView: View {
         .animation(.interpolatingSpring(mass: 1, stiffness: 200, damping: 5, initialVelocity: 0), value: message)
       VStack {
         Spacer()
-        Text(message).opacity(1.0)
+        Text(message)
+          .opacity(1.0)
+          .animation(.linear(duration: 1.0), value: message)
       }
     }
     .onAppear {
