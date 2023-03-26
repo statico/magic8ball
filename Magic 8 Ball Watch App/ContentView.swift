@@ -30,10 +30,14 @@ struct ContentView: View {
 
   var body: some View {
     ZStack {
+      Image("bg")
+        .resizable()
+        .aspectRatio(contentMode: .fill)
+        .edgesIgnoringSafeArea(.all)
       Image("8ball")
         .resizable()
-        .scaledToFit()
         .scaledToFill()
+        .scaleEffect(0.7)
         .rotationEffect(animationAngle)
         .offset(x: animationXOffset, y: animationYOffset)
         .scaleEffect(animationScale)
@@ -43,10 +47,17 @@ struct ContentView: View {
         Text(message)
           .opacity(1.0)
           .animation(.linear(duration: 1.0), value: message)
+          .foregroundColor(Color.white)
+          .shadow(color: Color.black.opacity(1.0), radius: 10, x: 0, y: 2)
+          .bold()
+          .minimumScaleFactor(0.5)
+          .lineLimit(nil)
+          .multilineTextAlignment(.center)
       }
     }
     .padding()
     .onAppear {
+      isActive = true
       initAudio()
     }
     .onTapGesture {
