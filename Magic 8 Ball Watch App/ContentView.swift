@@ -23,12 +23,16 @@ struct ContentView: View {
   let motionQueue = OperationQueue()
 
   var body: some View {
-    VStack {
+    ZStack {
       Image("8ball")
         .resizable()
         .scaledToFit()
-      Text(selectedAnswer)
-        .opacity(isShowingAnswer ? 1.0 : 0.0)
+        .scaledToFill()
+      VStack {
+        Spacer()
+        Text(selectedAnswer)
+          .opacity(isShowingAnswer ? 1.0 : 0.0)
+      }
     }
     .onTapGesture {
       if isShowingAnswer {
