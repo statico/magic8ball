@@ -12,12 +12,13 @@ import SwiftUI
 var audioPlayer = AVAudioPlayer()
 let audioSession = AVAudioSession.sharedInstance()
 
-struct ContentView: View {
-  let answers = ["It is certain", "It is decidedly so", "Without a doubt", "Yes definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Reply hazy, try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again", "Don't count on it", "Outlook not so good", "My sources say no", "Very doubtful", "My reply is no"]
+let answers = ["It is certain", "It is decidedly so", "Without a doubt", "Yes definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Reply hazy, try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again", "Don't count on it", "Outlook not so good", "My sources say no", "Very doubtful", "My reply is no"]
 
+struct ContentView: View {
   @State private var selectedAnswer = " "
   @State private var isShowingAnswer = false
   @State private var hideAnswerTimer: Timer?
+  @State private var isShaking = true
 
   let motionManager = CMMotionManager()
   let motionQueue = OperationQueue()
@@ -28,6 +29,15 @@ struct ContentView: View {
         .resizable()
         .scaledToFit()
         .scaledToFill()
+        .rotationEffect(
+          isShaking
+            ? Angle.degrees(Double.random(in: -10...10))
+            : Angle.degrees(0)
+        )
+        .offset(
+          x: isShaking ? CGFloat.random(in: -20...20) : 0,
+          y: isShaking ? CGFloat.random(in: -20...20) : 0
+        )
       VStack {
         Spacer()
         Text(selectedAnswer)
@@ -35,28 +45,40 @@ struct ContentView: View {
       }
     }
     .onTapGesture {
+      withAnimation(.interpolatingSpring(mass: 2, stiffness: 200, damping: 5, initialVelocity: 0)) {
+        show()
+      }
+
+      // Revert back to 8-ball image after 3 seconds
+      DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        withAnimation(.interpolatingSpring(mass: 2, stiffness: 200, damping: 5, initialVelocity: 0)) {
+          isShowingAnswer = false
+        }
+      }
+
       if isShowingAnswer {
         hideAnswerTimer?.invalidate()
         withAnimation {
           isShowingAnswer = false
         }
       } else {
-        showRandomMessage()
+        show()
       }
     }
     .padding()
     .onAppear {
-      willActivate()
+      initAudio()
+      withAnimation(.easeInOut(duration: 1.0).repeatForever()) {
+        isShaking = true
+      }
     }
     .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationDidBecomeActiveNotification)) { _ in
-      // Enable motion detection
       motionManager.startAccelerometerUpdates(to: motionQueue) { data, _ in
         guard let data = data else { return }
         let magnitude = sqrt(pow(data.acceleration.x, 2) + pow(data.acceleration.y, 2) + pow(data.acceleration.z, 2))
-        selectedAnswer = "\(magnitude)"
-//        if magnitude > 2.0 {
-//          showRandomMessage()
-//        }
+        if magnitude > 2.0 {
+          show()
+        }
       }
     }
     .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationWillResignActiveNotification)) { _ in
@@ -65,12 +87,9 @@ struct ContentView: View {
     }
   }
 
-  func willActivate() {
+  func initAudio() {
     do {
-      try audioSession.setCategory(AVAudioSession.Category.playback,
-                                   mode: .default,
-                                   policy: .default,
-                                   options: [])
+      try audioSession.setCategory(AVAudioSession.Category.playback, mode: .default, policy: .default, options: [])
     } catch {
       print("Unable to set up the audio session: \(error.localizedDescription)")
     }
@@ -87,7 +106,7 @@ struct ContentView: View {
     }
   }
 
-  func showRandomMessage() {
+  func show() {
     // Display the message
     let randomIndex = Int(arc4random_uniform(UInt32(answers.count)))
     selectedAnswer = answers[randomIndex]
