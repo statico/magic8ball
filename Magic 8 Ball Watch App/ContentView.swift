@@ -28,9 +28,11 @@ struct ContentView: View {
         .scaledToFill()
         .rotationEffect(Angle.degrees(Double.random(in: -20...20)))
         .offset(x: CGFloat.random(in: -20...20), y: CGFloat.random(in: -20...20))
-      VStack {
+        .scaleEffect(1.0 + CGFloat.random(in: -0.1...0.1))
+        .animation(.interpolatingSpring(mass: 1, stiffness: 200, damping: 5, initialVelocity: 0), value: message)
+    VStack {
         Spacer()
-        Text(message)
+        Text(message).opacity(1.0)
       }
     }
     .onAppear {
@@ -38,9 +40,7 @@ struct ContentView: View {
     }
     .padding()
     .onTapGesture {
-      withAnimation(.interpolatingSpring(mass: 2, stiffness: 200, damping: 5, initialVelocity: 0)) {
         shake()
-      }
     }
     .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationDidBecomeActiveNotification)) { _ in
       motionManager.startAccelerometerUpdates(to: motionQueue) { data, _ in
