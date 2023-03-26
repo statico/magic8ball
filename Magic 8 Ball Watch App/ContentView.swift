@@ -73,6 +73,7 @@ struct ContentView: View {
       let soundURL = URL(fileURLWithPath: soundPath)
       do {
         audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+        audioPlayer.enableRate = true
       } catch {
         print("Error playing sound: \(error.localizedDescription)")
       }
@@ -83,7 +84,7 @@ struct ContentView: View {
 
   func shake() {
     hasShaken = true
-    
+
     let index = Int(arc4random_uniform(UInt32(answers.count)))
     message = answers[index]
 
@@ -93,6 +94,8 @@ struct ContentView: View {
         return
       }
       if success {
+        audioPlayer.volume = 0.5
+        audioPlayer.rate = Float.random(in: 0.8...1.3)
         audioPlayer.play()
       }
     }
