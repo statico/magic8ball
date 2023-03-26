@@ -21,8 +21,7 @@
 		3C3340B829D08B8100D61961 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C3340B729D08B8100D61961 /* LaunchScreen.storyboard */; };
 		3C3340BA29D08C8600D61961 /* ShakeGestureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3340B929D08C8600D61961 /* ShakeGestureManager.swift */; };
 		3C3340C129D0908400D61961 /* abstract_ball.dae in Resources */ = {isa = PBXBuildFile; fileRef = 3C3340C029D0908400D61961 /* abstract_ball.dae */; };
-		3C3340C329D0935100D61961 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3340C229D0935100D61961 /* Ball.swift */; };
-		3CCE59F929D0876E005D1B6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C186B2C29CEC1B8009100C9 /* Assets.xcassets */; };
+		3C3340C529D0AC7F00D61961 /* BallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3340C429D0AC7F00D61961 /* BallView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +64,7 @@
 		3C3340B729D08B8100D61961 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3C3340B929D08C8600D61961 /* ShakeGestureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeGestureManager.swift; sourceTree = "<group>"; };
 		3C3340C029D0908400D61961 /* abstract_ball.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = abstract_ball.dae; sourceTree = "<group>"; };
-		3C3340C229D0935100D61961 /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		3C3340C429D0AC7F00D61961 /* BallView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,13 +108,13 @@
 		3C186B1529CEC1B7009100C9 /* Magic 8 Ball */ = {
 			isa = PBXGroup;
 			children = (
+				3C3340B729D08B8100D61961 /* LaunchScreen.storyboard */,
 				3C186B1629CEC1B7009100C9 /* Magic8BallApp.swift */,
 				3C186B1829CEC1B7009100C9 /* ContentView.swift */,
+				3C3340C429D0AC7F00D61961 /* BallView.swift */,
+				3C3340B929D08C8600D61961 /* ShakeGestureManager.swift */,
 				3C186B1A29CEC1B7009100C9 /* Assets.xcassets */,
 				3C186B1C29CEC1B7009100C9 /* Preview Content */,
-				3C3340B729D08B8100D61961 /* LaunchScreen.storyboard */,
-				3C3340B929D08C8600D61961 /* ShakeGestureManager.swift */,
-				3C3340C229D0935100D61961 /* Ball.swift */,
 			);
 			path = "Magic 8 Ball";
 			sourceTree = "<group>";
@@ -240,7 +239,6 @@
 				3C186B1E29CEC1B7009100C9 /* Preview Assets.xcassets in Resources */,
 				3C3340C129D0908400D61961 /* abstract_ball.dae in Resources */,
 				3C05F20F29CED1DE00CBB6D6 /* shake.wav in Resources */,
-				3CCE59F929D0876E005D1B6E /* Assets.xcassets in Resources */,
 				3C3340B829D08B8100D61961 /* LaunchScreen.storyboard in Resources */,
 				3C186B1B29CEC1B7009100C9 /* Assets.xcassets in Resources */,
 			);
@@ -263,10 +261,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C3340C329D0935100D61961 /* Ball.swift in Sources */,
 				3C186B1929CEC1B7009100C9 /* ContentView.swift in Sources */,
 				3C186B1729CEC1B7009100C9 /* Magic8BallApp.swift in Sources */,
 				3C3340BA29D08C8600D61961 /* ShakeGestureManager.swift in Sources */,
+				3C3340C529D0AC7F00D61961 /* BallView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
