@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/ian/dev/magic8ball/Magic 8 Ball.xcodeproj">
    </FileRef>
 </Workspace>

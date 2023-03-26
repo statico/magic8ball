@@ -1,14 +1,15 @@
 //
 //  ContentView.swift
-//  magic8ball Watch App
+//  Magic 8 Ball Watch App
 //
 //  Created by Ian on 3/24/23.
 //
 
 import AVFoundation
+import CoreMotion
 import SwiftUI
 
-var player = AVAudioPlayer()
+var audioPlayer = AVAudioPlayer()
 let audioSession = AVAudioSession.sharedInstance()
 
 struct ContentView: View {
@@ -17,6 +18,9 @@ struct ContentView: View {
   @State private var selectedAnswer = " "
   @State private var isShowingAnswer = false
   @State private var hideAnswerTimer: Timer?
+
+  let motionManager = CMMotionManager()
+  let motionQueue = OperationQueue()
 
   var body: some View {
     VStack {
@@ -40,6 +44,21 @@ struct ContentView: View {
     .onAppear {
       willActivate()
     }
+    .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationDidBecomeActiveNotification)) { _ in
+      // Enable motion detection
+      motionManager.startAccelerometerUpdates(to: motionQueue) { data, _ in
+        guard let data = data else { return }
+        let magnitude = sqrt(pow(data.acceleration.x, 2) + pow(data.acceleration.y, 2) + pow(data.acceleration.z, 2))
+        selectedAnswer = "\(magnitude)"
+//        if magnitude > 2.0 {
+//          showRandomMessage()
+//        }
+      }
+    }
+    .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationWillResignActiveNotification)) { _ in
+      // Disable motion detection
+      motionManager.stopAccelerometerUpdates()
+    }
   }
 
   func willActivate() {
@@ -52,12 +71,10 @@ struct ContentView: View {
       print("Unable to set up the audio session: \(error.localizedDescription)")
     }
 
-    print("here")
     if let soundPath = Bundle.main.path(forResource: "shake", ofType: "wav") {
       let soundURL = URL(fileURLWithPath: soundPath)
-      print("soundURL = \(soundURL)")
       do {
-        player = try AVAudioPlayer(contentsOf: soundURL)
+        audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
       } catch {
         print("Error playing sound: \(error.localizedDescription)")
       }
@@ -81,7 +98,7 @@ struct ContentView: View {
         return
       }
       if success {
-        player.play()
+        audioPlayer.play()
       }
     }
 

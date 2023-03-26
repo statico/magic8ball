@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  magic8ball
+//  Magic 8 Ball
 //
 //  Created by Ian on 3/24/23.
 //
