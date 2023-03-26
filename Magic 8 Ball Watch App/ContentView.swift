@@ -16,6 +16,7 @@ let answers = ["It is certain", "It is decidedly so", "Without a doubt", "Yes de
 
 struct ContentView: View {
   @State private var message = ""
+  @State private var hasShaken = false
 
   let motionManager = CMMotionManager()
   let motionQueue = OperationQueue()
@@ -26,11 +27,14 @@ struct ContentView: View {
         .resizable()
         .scaledToFit()
         .scaledToFill()
-        .rotationEffect(Angle.degrees(Double.random(in: -20...20)))
-        .offset(x: CGFloat.random(in: -20...20), y: CGFloat.random(in: -20...20))
-        .scaleEffect(1.0 + CGFloat.random(in: -0.1...0.1))
+        .rotationEffect(Angle.degrees(hasShaken ? Double.random(in: -20...20) : 0))
+        .offset(
+          x: hasShaken ? CGFloat.random(in: -20...20) : 0,
+          y: hasShaken ? CGFloat.random(in: -20...20) : 0
+        )
+        .scaleEffect(1.0 + (hasShaken ? CGFloat.random(in: -0.1...0.1) : 0))
         .animation(.interpolatingSpring(mass: 1, stiffness: 200, damping: 5, initialVelocity: 0), value: message)
-    VStack {
+      VStack {
         Spacer()
         Text(message).opacity(1.0)
       }
@@ -40,7 +44,7 @@ struct ContentView: View {
     }
     .padding()
     .onTapGesture {
-        shake()
+      shake()
     }
     .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationDidBecomeActiveNotification)) { _ in
       motionManager.startAccelerometerUpdates(to: motionQueue) { data, _ in
@@ -76,8 +80,10 @@ struct ContentView: View {
   }
 
   func shake() {
-    let randomIndex = Int(arc4random_uniform(UInt32(answers.count)))
-    message = answers[randomIndex]
+    hasShaken = true
+    
+    let index = Int(arc4random_uniform(UInt32(answers.count)))
+    message = answers[index]
 
     audioSession.activate(options: []) { success, error in
       guard error == nil else {
@@ -88,7 +94,6 @@ struct ContentView: View {
         audioPlayer.play()
       }
     }
-
   }
 }
 
