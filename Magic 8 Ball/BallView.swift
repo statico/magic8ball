@@ -29,33 +29,19 @@ struct BallView: UIViewRepresentable {
   func spinBall() {
     print("spinBall")
     let ballNode = scene.rootNode.childNode(withName: childNodeName, recursively: true)
-
+    ballNode?.removeAllActions()
+    
     // Get a random direction and apply a random spin
     let direction = SCNVector3(x: Float.random(in: -1...1), y: Float.random(in: -1...1), z: Float.random(in: -1...1))
-    let rotation = SCNAction.rotateBy(x: CGFloat.random(in: -1...1), y: CGFloat.random(in: -1...1), z: CGFloat.random(in: -1...1), duration: 1.0)
-    let translation = SCNAction.move(by: direction, duration: 1.0)
-    let scale = SCNAction.scale(by: 1.5, duration: 0.5)
-    let bounceScale = SCNAction.customAction(duration: 0.5) { node, elapsed in
-      let progress = elapsed / CGFloat(0.5)
-      let scale = SCNMatrix4Lerp(from: SCNMatrix4Identity, to: SCNMatrix4MakeScale(1.0, 1.0, 1.0), t: Float(progress))
-      node.transform = scale
-    }
-    let bounceTranslation = SCNAction.customAction(duration: 0.5) { node, elapsed in
-      let progress = elapsed / CGFloat(0.5)
-      let position = SCNVector3Lerp(node.presentation.position, SCNVector3Zero, Float(progress))
-      node.position = position
-    }
-    let bounceRotation = SCNAction.customAction(duration: 0.5) { node, elapsed in
-      let progress = elapsed / CGFloat(0.5)
-      let rotation = SCNVector4Lerp(SCNVector4(x: 0, y: 0, z: 0, w: 1), SCNVector4Zero, Float(progress))
-      node.rotation = rotation
-    }
+    let spin = SCNAction.rotate(by: 4.0 * CGFloat.pi, around: direction, duration: 2.0)
+    spin.timingMode = .easeOut
 
-    // Run the spin action for a short duration, then ease back to the original rotation
-    ballNode?.runAction(SCNAction.sequence([
-      SCNAction.group([rotation, translation, scale]),
-      SCNAction.group([bounceScale, bounceTranslation, bounceRotation])
-    ]))
+    // Apply a force to the ball node to move it in the random direction
+    ballNode?.physicsBody?.applyForce(direction, asImpulse: true)
+
+    // Run the spin action for a short duration
+    ballNode?.runAction(spin, forKey: "spin")
+
   }
 
   func SCNMatrix4Lerp(from: SCNMatrix4, to: SCNMatrix4, t: Float) -> SCNMatrix4 {
