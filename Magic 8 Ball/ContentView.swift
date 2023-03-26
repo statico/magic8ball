@@ -7,6 +7,7 @@
 
 import AVFoundation
 import CoreMotion
+import SceneKit
 import SwiftUI
 import UIKit
 
@@ -31,14 +32,7 @@ struct ContentView: View {
   var body: some View {
     ZStack {
       ShakeViewRepresentable().allowsHitTesting(false)
-      Image("8ball")
-        .resizable()
-        .scaledToFit()
-        .scaledToFill()
-        .rotationEffect(animationAngle)
-        .offset(x: animationXOffset, y: animationYOffset)
-        .scaleEffect(animationScale)
-        .animation(.interpolatingSpring(mass: 1, stiffness: 200, damping: 5, initialVelocity: 0), value: timer)
+      SceneKitView(scene: SCNScene(named: "abstract_ball.dae")!)
       VStack {
         Spacer()
         Text(message)
@@ -126,3 +120,21 @@ struct ContentView_Previews: PreviewProvider {
     ContentView()
   }
 }
+
+struct SceneKitView: UIViewRepresentable {
+  let scene: SCNScene
+
+  func makeUIView(context: Context) -> SCNView {
+    let sceneView = SCNView(frame: .zero)
+    sceneView.scene = scene
+    sceneView.allowsCameraControl = true
+    sceneView.autoenablesDefaultLighting = true
+    sceneView.backgroundColor = UIColor.black
+    let ball = sceneView.scene?.rootNode.childNode(withName: "ball", recursively: true)
+    ball?.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2 * .pi, z: 0, duration: 3)))
+    return sceneView
+  }
+
+  func updateUIView(_ uiView: SCNView, context: Context) {}
+}
+
