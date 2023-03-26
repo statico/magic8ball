@@ -21,7 +21,8 @@ struct ContentView: View {
   @State private var animationAngle = Angle.degrees(0.0)
   @State private var animationXOffset = 0.0
   @State private var animationYOffset = 0.0
-  @State private var animationScale = 0.0
+  @State private var animationScale = 1.0
+  @State private var lastShakeTime = Date.distantPast
 
   let motionManager = CMMotionManager()
   let motionQueue = OperationQueue()
@@ -43,24 +44,40 @@ struct ContentView: View {
           .animation(.linear(duration: 1.0), value: message)
       }
     }
+    .padding()
     .onAppear {
       initAudio()
     }
-    .padding()
     .onTapGesture {
       shake()
     }
     .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationDidBecomeActiveNotification)) { _ in
+      print("XXXXXXXXX did become active")
       motionManager.startAccelerometerUpdates(to: motionQueue) { data, _ in
         guard let data = data else { return }
         let magnitude = sqrt(pow(data.acceleration.x, 2) + pow(data.acceleration.y, 2) + pow(data.acceleration.z, 2))
         if magnitude > 2.0 {
-          shake()
+          let currentTime = Date()
+          let timeSinceLastShake = currentTime.timeIntervalSince(lastShakeTime)
+          if timeSinceLastShake >= 1.0 {
+            lastShakeTime = currentTime
+            DispatchQueue.main.async {
+              shake()
+            }
+          }
         }
       }
     }
     .onReceive(NotificationCenter.default.publisher(for: WKExtension.applicationWillResignActiveNotification)) { _ in
+      print("XXXXXXXXX will resign")
+      message = ""
+      animationAngle = Angle.degrees(0.0)
+      animationXOffset = 0.0
+      animationYOffset = 0.0
+      animationScale = 1.0
       motionManager.stopAccelerometerUpdates()
+      timer?.fire()
+      timer?.invalidate()
     }
   }
 
@@ -85,6 +102,7 @@ struct ContentView: View {
   }
 
   func shake() {
+    print("XXXXXXXXX shake()")
     hasShaken = true
     message = ""
     animationAngle = Angle.degrees(hasShaken ? Double.random(in: -20...20) : 0)
@@ -96,6 +114,7 @@ struct ContentView: View {
     timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
       let index = Int(arc4random_uniform(UInt32(answers.count)))
       message = answers[index]
+      print("XXXXXXXXX timer message=\(message)")
     }
 
     audioSession.activate(options: []) { success, error in
