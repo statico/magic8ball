@@ -33,6 +33,10 @@ struct ContentView: View {
   var body: some View {
     ZStack {
       ShakeViewRepresentable().allowsHitTesting(false)
+      Image("bg")
+        .resizable()
+        .aspectRatio(contentMode: .fill)
+        .edgesIgnoringSafeArea(.all)
       ballView
         .frame(width: 400, height: 400)
       VStack {
@@ -41,10 +45,18 @@ struct ContentView: View {
           .opacity(1.0)
           .animation(.linear(duration: 1.0), value: message)
           .foregroundColor(Color.white)
+          .shadow(color: Color.black.opacity(1.0), radius: 10, x: 0, y: 2)
+          .font(.system(size: UIScreen.main.bounds.size.height * 0.05))
+          .bold()
+          .minimumScaleFactor(0.5)
+          .lineLimit(nil)
+          .multilineTextAlignment(.center)
+          .padding(.bottom, UIScreen.main.bounds.size.height * 0.07)
+          .padding(.horizontal, UIScreen.main.bounds.size.width * 0.05)
+          .frame(width: UIScreen.main.bounds.size.width)
       }
     }
     .padding()
-    .background(Color.black)
     .onAppear {
       print("onAppear")
       initAudio()

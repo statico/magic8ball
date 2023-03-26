@@ -22,6 +22,7 @@
 		3C3340BA29D08C8600D61961 /* ShakeGestureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3340B929D08C8600D61961 /* ShakeGestureManager.swift */; };
 		3C3340C129D0908400D61961 /* abstract_ball.dae in Resources */ = {isa = PBXBuildFile; fileRef = 3C3340C029D0908400D61961 /* abstract_ball.dae */; };
 		3C3340C529D0AC7F00D61961 /* BallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3340C429D0AC7F00D61961 /* BallView.swift */; };
+		3C3340C729D0B61300D61961 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3340C629D0B61300D61961 /* bg.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		3C3340B929D08C8600D61961 /* ShakeGestureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeGestureManager.swift; sourceTree = "<group>"; };
 		3C3340C029D0908400D61961 /* abstract_ball.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = abstract_ball.dae; sourceTree = "<group>"; };
 		3C3340C429D0AC7F00D61961 /* BallView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallView.swift; sourceTree = "<group>"; };
+		3C3340C629D0B61300D61961 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 		3C3340BB29D08FD700D61961 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				3C3340C629D0B61300D61961 /* bg.png */,
 				3C3340C029D0908400D61961 /* abstract_ball.dae */,
 				3C05F20E29CED1DE00CBB6D6 /* shake.wav */,
 			);
@@ -238,6 +241,7 @@
 			files = (
 				3C186B1E29CEC1B7009100C9 /* Preview Assets.xcassets in Resources */,
 				3C3340C129D0908400D61961 /* abstract_ball.dae in Resources */,
+				3C3340C729D0B61300D61961 /* bg.png in Resources */,
 				3C05F20F29CED1DE00CBB6D6 /* shake.wav in Resources */,
 				3C3340B829D08B8100D61961 /* LaunchScreen.storyboard in Resources */,
 				3C186B1B29CEC1B7009100C9 /* Assets.xcassets in Resources */,
