@@ -2,11 +2,13 @@
 
 https://user-images.githubusercontent.com/137158/227802904-8569a921-3ebb-47fb-ab7f-4f86f1499a7d.mp4
 
-(Yes, the animation is awful, but I ran out of time this weekend.)
+Yes, the animation is awful, but I ran out of time this weekend. You should be able to clone this repo and run the Xcode project without any extras. I used Xcode 14.2 on macOS 13.2.1.
 
 ## Why?
 
 I wanted to try learning a new topic and building a relatively simple project using ChatGPT. I had no prior knowledge of Swift and last did iOS development in 2013. I've done a little 3D before.
+
+I'm not particularly obsessed with [magic 8-balls](https://en.wikipedia.org/wiki/Magic_8_Ball) — it just seemed like an easy thing to make with some fun polishing edge cases. Here's [a video](https://www.youtube.com/watch?v=0-FYc-eEDa0) if you're wondering what's inside one.
 
 ## TL;DR
 
@@ -23,3 +25,163 @@ I couldn't find a usable, free magic 8-ball 3D model, so I used a nice regular 8
 - [Eight Ball 3D model from RoutineStudio via Sketchfab](https://sketchfab.com/3d-models/eight-ball-24a32adaf6014528ad71a1de9af6b084)
 - [abstract ball 3D model by sonic art](https://www.turbosquid.com/3d-models/abstract-ball-3d-model-1737482#) was used as a placeholder
 - [iOS & Android App Icon Template](https://www.figma.com/community/file/994333518688155629) and [App Store Screenshots](https://www.figma.com/community/file/1071476530354359587) from the Figma community
+
+## Abridged Development Log
+
+Here's an abridged list of the ChatGPT questions I asked. I also had to ask a lot of clarifying questions or sometimes would ask it things instead of googling. These are the most notable bits.
+
+### Background Knowledge
+
+I started by making sure ChatGTP knew what a magic 8-ball was. No problem. Is this right? I never bothered to check [Wikipedia](https://en.wikipedia.org/wiki/Magic_8_Ball).
+
+![CleanShot 2023-03-26 at 13 50 17](https://user-images.githubusercontent.com/137158/227803856-fc02d97a-d3a9-4534-93c4-9547095b86e9.png)
+
+### Initial Watch App
+
+I asked it to tell me how to build an Apple Watch app. It gave me ObjC instructions first but then I told it I wanted to use Swift.
+
+![CleanShot 2023-03-26 at 13 50 48](https://user-images.githubusercontent.com/137158/227803918-a33dc450-ede4-424d-be1c-5ae08c2ce06d.png)
+
+### How do I even use XCode?
+
+![CleanShot 2023-03-26 at 13 53 32](https://user-images.githubusercontent.com/137158/227804033-b4af5274-4b6f-4c78-9325-c43003b402d0.png)
+
+### Oh right, we need a .gitignore
+
+![CleanShot 2023-03-26 at 13 53 41](https://user-images.githubusercontent.com/137158/227804042-7eb339bb-8c7f-4e11-ae66-a4def16b7bd9.png)
+
+### I have no Idea what I'm doing
+
+My knowledge of iOS and Swift was practically non-existant. Trying to understand animations, threads, timers, contexts, and Swift closures took a lot of time. I wanted the message to appear after a delay and that took a lot of work. ChatGPT wasn't very helpful here.
+
+![CleanShot 2023-03-26 at 13 56 12](https://user-images.githubusercontent.com/137158/227804168-fd346c24-5273-42e8-aae1-d8e76f37d355.png)
+![CleanShot 2023-03-26 at 13 56 32](https://user-images.githubusercontent.com/137158/227804183-fd45a0d5-eddb-4fe4-84a4-cf4417627e60.png)
+![CleanShot 2023-03-26 at 13 56 41](https://user-images.githubusercontent.com/137158/227804186-64710d40-053d-4389-a30f-349387e6632a.png)
+![CleanShot 2023-03-26 at 13 56 52](https://user-images.githubusercontent.com/137158/227804197-4763d1fa-0c66-44ff-a956-dc6ae9b10a76.png)
+
+...etc. I think I erased a lot of the code and tried to make things minimal here.
+
+### Let's add sound
+
+This was painful. I had to google a lot and ended up on StackOverflow most of the time.
+
+![CleanShot 2023-03-26 at 13 58 05](https://user-images.githubusercontent.com/137158/227804249-ce23bfb6-5042-4742-aacd-80490476f951.png)
+![CleanShot 2023-03-26 at 13 58 15](https://user-images.githubusercontent.com/137158/227804255-be4990f6-10f7-495d-a338-81ea927573ac.png)
+![CleanShot 2023-03-26 at 13 58 22](https://user-images.githubusercontent.com/137158/227804261-c2edc002-1227-4a7e-98ea-457418e9a9aa.png)
+![CleanShot 2023-03-26 at 13 58 29](https://user-images.githubusercontent.com/137158/227804277-1e2cf8f7-15c3-4883-9613-efd3929b553b.png)
+![CleanShot 2023-03-26 at 13 58 44](https://user-images.githubusercontent.com/137158/227804289-4d02feae-9d9b-4491-ac10-23a55423e3bf.png)
+![CleanShot 2023-03-26 at 13 58 49](https://user-images.githubusercontent.com/137158/227804298-e484189c-c315-406c-83f2-867e44c1e901.png)
+
+### Show a message when I shake the watch
+
+You're supposed to shake the magic 8-ball, so I wanted to be able to shake the watch. This is where ChatGPT really impressed me with its `magnitude` calculation. However, in reality, when you shake an Apple Watch it tends to deactivate because you're not looking at it and stop the animation. Also I didn't know enough SwiftUI to understand why everything was broken.
+
+![CleanShot 2023-03-26 at 14 02 16](https://user-images.githubusercontent.com/137158/227804482-a744163e-0448-4d7e-a8c1-aa2ca6c59633.png)
+![CleanShot 2023-03-26 at 14 02 51](https://user-images.githubusercontent.com/137158/227804505-3250ee4f-5273-471b-9c97-754c46c9d90b.png)
+![CleanShot 2023-03-26 at 14 02 59](https://user-images.githubusercontent.com/137158/227804516-af33ab00-98d8-4dde-a7c3-e86ff11d6194.png)
+
+### Teach me how to animate
+
+There was a lot of back and forth here and I started to get a little frustrated. There were probably ~15 back and forths with ChatGPT and three times I said something like "OK, forget all that, let's try again. Here's my code." Finally a breakthrough:
+
+![CleanShot 2023-03-26 at 14 08 26](https://user-images.githubusercontent.com/137158/227804713-bcf8af7a-0819-4381-90ec-a8d26c70afd8.png)
+![CleanShot 2023-03-26 at 14 08 37](https://user-images.githubusercontent.com/137158/227804721-fe5923e9-57c8-4f58-b7e8-0ceff2de77d8.png)
+![CleanShot 2023-03-26 at 14 08 42](https://user-images.githubusercontent.com/137158/227804730-5f54c22d-9f8e-48c3-9498-14ce5e3f31e7.png)
+
+I did this but it felt like I was helping ChatGPT cheat 🤣
+
+![CleanShot 2023-03-26 at 14 09 33](https://user-images.githubusercontent.com/137158/227804765-223eb92b-e137-4a4a-ba30-9c91380fefa1.png)
+
+### Add some variation to the sound
+
+ChatGPT was totally wrong here. Per its instructions I went down a wrong path of trying to use `AVAudioUnitTimePitch`. I'm not sure if my code was wrong or if it's not possible on watchOS.
+
+![CleanShot 2023-03-26 at 14 09 43](https://user-images.githubusercontent.com/137158/227804776-68dc8307-aaab-4d9a-ab99-b59be60df593.png)
+![CleanShot 2023-03-26 at 14 10 58](https://user-images.githubusercontent.com/137158/227804837-613d1cb4-354d-4c01-aa34-84245b9ec24d.png)
+
+### Trying to fix watch bugs
+
+Dealing with activation/deactivation on the watch was annoying. I eventually scrapped the code, added lots of `print()`s, and at this point read [Learn X in Y Minutes (where X=Swift)](https://learnxinyminutes.com/docs/swift/) to try and learn things. ChatGPT gave me lots of ideas, many of which were wrong, so I spent a lot of time googling again. But at least I kind of had a sense of what to look for.
+
+![CleanShot 2023-03-26 at 14 12 47](https://user-images.githubusercontent.com/137158/227804907-c7f1775f-a503-435f-8538-3edd8d0bb40f.png)
+![CleanShot 2023-03-26 at 14 13 33](https://user-images.githubusercontent.com/137158/227804941-87ced4b6-c873-4ee2-b0da-333764342511.png)
+
+Later on this was helpful:
+
+![CleanShot 2023-03-26 at 14 14 34](https://user-images.githubusercontent.com/137158/227804985-890c53cf-b523-481e-b08a-eda3b9889bc7.png)
+
+### Timers
+
+ChatGPT successfully taught me about timers.
+
+![CleanShot 2023-03-26 at 14 13 13](https://user-images.githubusercontent.com/137158/227804927-0bb3c8c4-6075-41ab-8535-daf4142d9ca6.png)
+
+This was obvious but I wanted to see if ChatGPT knew anything better. Nope!
+
+![CleanShot 2023-03-26 at 14 14 05](https://user-images.githubusercontent.com/137158/227804978-1dd11d36-f241-495b-b0d2-bfb3e0338a5a.png)
+
+### Let's pretend to get on the app store
+
+I like [this template](https://www.figma.com/community/file/1071476530354359587). So let's use Chat GPT to generate the content! And Midjourney for a background image.
+
+![CleanShot 2023-03-26 at 14 15 23](https://user-images.githubusercontent.com/137158/227805016-3e84b3ef-ad60-4943-97ea-d15f69bbed31.png)
+![image](https://user-images.githubusercontent.com/137158/227805046-bbc92f62-3ba3-4303-81a9-731fb7f4fd24.png)
+![image](https://user-images.githubusercontent.com/137158/227805049-5e1e8435-0b74-4c25-9722-1d1323028241.png)
+![image](https://user-images.githubusercontent.com/137158/227805060-ba1f02dd-9433-4667-a183-17ecc7b944e4.png)
+
+### Conversion to iOS
+
+After lots of tweaking the watch app felt good enough. ChatGPT already had the context, so I just needed to know the differences between it and watchOS. Unfortunately a bunch of this stuff was wrong. XCode mostly bailed me out.
+
+![CleanShot 2023-03-26 at 14 17 33](https://user-images.githubusercontent.com/137158/227805108-d169db53-6ea6-4bde-98c6-2dd2e54f89c8.png)
+
+But this helped me out, even if the syntax was off.
+
+![CleanShot 2023-03-26 at 14 18 52](https://user-images.githubusercontent.com/137158/227805155-f2f856e7-e606-4a81-b46b-27d83a825a15.png)
+
+### Shaking on iOS
+
+I still don't know how to handle this. ChatGPT wasn't helpful and I still don't know how to do it.
+
+![CleanShot 2023-03-26 at 14 19 52](https://user-images.githubusercontent.com/137158/227805192-470f7519-162d-47ef-8085-9ed559b35a31.png)
+![CleanShot 2023-03-26 at 14 19 59](https://user-images.githubusercontent.com/137158/227805200-e879c843-1e9c-4a34-adb2-e800cff70f9e.png)
+![CleanShot 2023-03-26 at 14 20 05](https://user-images.githubusercontent.com/137158/227805207-f0f531e9-e91d-4956-bdca-17f94f67e0ee.png)
+
+Then it made up something called `ShakeGesture`?
+
+![CleanShot 2023-03-26 at 14 21 31](https://user-images.githubusercontent.com/137158/227805277-f5b04445-3401-49c6-8751-c826c287495e.png)
+
+
+### Loading screen tweaks
+
+ChatGPT helped here, but only after two wrong answers.
+
+![CleanShot 2023-03-26 at 14 20 40](https://user-images.githubusercontent.com/137158/227805238-f4a71b52-03c0-4c22-9335-f36b17fe745a.png)
+
+TODO: More
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
