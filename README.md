@@ -18,7 +18,7 @@ Overall, this feels like having a superpower. ChatGTP is like a mostly-knowledga
 
 ## Development Log
 
-Here's an abridged list of the ChatGPT questions I asked in rough chronological order. I also had to ask a lot of clarifying questions or sometimes would ask it things instead of googling. These are the most notable bits.
+Here's an abridged list of the ChatGPT questions I asked in rough chronological order. All of it was in a single ChatGPT chat. I also had to ask a lot of clarifying questions or sometimes would ask it things instead of googling. These are the most notable bits.
 
 ### Background Knowledge
 
@@ -117,62 +117,61 @@ ChatGPT successfully taught me about timers in Swift.
 
 ![CleanShot 2023-03-26 at 14 13 13](https://user-images.githubusercontent.com/137158/227804927-0bb3c8c4-6075-41ab-8535-daf4142d9ca6.png)
 
-This was obvious but I wanted to see if ChatGPT knew anything better. Nope!
+### Feature: App Store marketing copy
 
-![CleanShot 2023-03-26 at 14 14 05](https://user-images.githubusercontent.com/137158/227804978-1dd11d36-f241-495b-b0d2-bfb3e0338a5a.png)
+I don't really plan on spending $99 to put yet another magic eight ball app on the App Store. But I _was_ thinking about all the screenshots and copy you need to make an app look presentable, so I enlisted ChatGPT's help here.
 
-### Let's pretend to get on the app store
-
-I like [this template](https://www.figma.com/community/file/1071476530354359587). So let's use Chat GPT to generate the content! And Midjourney for a background image.
+I found a good [Figma template](https://www.figma.com/community/file/1071476530354359587) for App Store screenshots and asked ChatGPT for some copy. Since it already had plenty of context from the conversation, this was perfect:
 
 ![CleanShot 2023-03-26 at 14 15 23](https://user-images.githubusercontent.com/137158/227805016-3e84b3ef-ad60-4943-97ea-d15f69bbed31.png)
-![image](https://user-images.githubusercontent.com/137158/227805046-bbc92f62-3ba3-4303-81a9-731fb7f4fd24.png)
-![image](https://user-images.githubusercontent.com/137158/227805049-5e1e8435-0b74-4c25-9722-1d1323028241.png)
-![image](https://user-images.githubusercontent.com/137158/227805060-ba1f02dd-9433-4667-a183-17ecc7b944e4.png)
 
-### Conversion to iOS
+Nice. Switch over to Midjourney fro some fortune telling background and some kind of, I dunno, weird "eight balls in space" kind image for the marketing background? Who really looks at that stuff? It just needs to be eye-catching. I think. I'm not an expert.
 
-After lots of tweaking the watch app felt good enough. ChatGPT already had the context, so I just needed to know the differences between it and watchOS. Unfortunately a bunch of this stuff was wrong. XCode mostly bailed me out.
+![CleanShot 2023-03-26 at 21 56 28](https://user-images.githubusercontent.com/137158/227844464-a2c58a4c-68b7-4ebc-b76e-f728d7435da9.png)
+![CleanShot 2023-03-26 at 21 56 45](https://user-images.githubusercontent.com/137158/227844493-a97763d5-ea37-4b1b-b8db-c205bf6929ca.png)
+![image](https://user-images.githubusercontent.com/137158/227844524-569cba86-28fb-4b43-9085-7bcd82044a50.png)
 
-![CleanShot 2023-03-26 at 14 17 33](https://user-images.githubusercontent.com/137158/227805108-d169db53-6ea6-4bde-98c6-2dd2e54f89c8.png)
+### Scaffolding the iOS App
 
-But this helped me out, even if the syntax was off.
+The watch app eventually felt good enough, and I had an itch to add a _really cool 3D magic eight ball_ to the iOS version, which I knew could embed 3D models. So it was time to let ChatGPT write the iOS app, but first I wanted some instructions:
 
-![CleanShot 2023-03-26 at 14 18 52](https://user-images.githubusercontent.com/137158/227805155-f2f856e7-e606-4a81-b46b-27d83a825a15.png)
+![CleanShot 2023-03-26 at 21 59 27](https://user-images.githubusercontent.com/137158/227844852-46506930-b68d-4d18-b0ad-b5533d0ae20f.png)
 
-### Shaking Gesture on iOS
+Gah, this turned out to be all wrong. Xcode was angry. I gave up, copied the watchOS View, and deleted stuff until it worked on iOS.
 
-I still don't know how to handle this. ChatGPT wasn't helpful and I still don't know how to do it.
+Follow-up questions were where ChatGPT really helped. All of this seemed googleable, but this is where it really felt like peer programming. I just wanted someone (or something) to tell me the right thing to do:
+
+![CleanShot 2023-03-26 at 22 04 39](https://user-images.githubusercontent.com/137158/227845524-91cca385-8a18-40bc-be93-f9c64894676f.png)
+![CleanShot 2023-03-26 at 22 04 49](https://user-images.githubusercontent.com/137158/227845622-abcc5557-618c-4cf6-a3b9-f76b9aeeb878.png)
+
+### Feature: Shake gesture on iOS
+
+As mentioned earlier, ChatGPT gave me a _lot_ of wrong info here, eventually making up something called `ShakeGesture`, which doesn't seem to exist. Eventually I googled around and found a solution that was simple and seemed much more up to date than anything ChatGPT was generating.
 
 ![CleanShot 2023-03-26 at 14 19 52](https://user-images.githubusercontent.com/137158/227805192-470f7519-162d-47ef-8085-9ed559b35a31.png)
 ![CleanShot 2023-03-26 at 14 19 59](https://user-images.githubusercontent.com/137158/227805200-e879c843-1e9c-4a34-adb2-e800cff70f9e.png)
 ![CleanShot 2023-03-26 at 14 20 05](https://user-images.githubusercontent.com/137158/227805207-f0f531e9-e91d-4956-bdca-17f94f67e0ee.png)
 
-Then it made up something called `ShakeGesture`?
+### Feature: Fixing the text
 
-![CleanShot 2023-03-26 at 14 21 31](https://user-images.githubusercontent.com/137158/227805277-f5b04445-3401-49c6-8751-c826c287495e.png)
+I had no idea how to lay out text and make it bigger and whatnot. ChatGPT was super helpful here and I was able to continually ask it to tweak my code. This was one of my favorite parts of using ChatGPT because it felt like it was talking to an expert — or at least someone who had read a million tutorials and documentation pages...
 
-### Loading screen tweaks
-
-ChatGPT helped here, but only after two wrong answers.
-
-![CleanShot 2023-03-26 at 14 20 40](https://user-images.githubusercontent.com/137158/227805238-f4a71b52-03c0-4c22-9335-f36b17fe745a.png)
-
-### Customizing the view
-
-ChatGPT did a great job solving simple problems and modifying parts of my View. It was a lot easier to just ask ChatGPT, which already had my existing View code in context, to do something like change the font settings rather than google it and/or dig through code completion or docs. This was one of my favorite parts of using it because I felt like it was talking to an expert — or at least someone who had read a million tutorials and documentation pages ;)
-
-![CleanShot 2023-03-26 at 20 35 15](https://user-images.githubusercontent.com/137158/227834640-d1062e05-c77d-43e9-84f6-6a11812520de.png)
 ![CleanShot 2023-03-26 at 20 35 30](https://user-images.githubusercontent.com/137158/227834664-6c80bca5-56d7-4137-b2b4-699f9989d4ec.png)
-![CleanShot 2023-03-26 at 20 35 56](https://user-images.githubusercontent.com/137158/227834726-b4f4ca02-0c8e-446f-8d38-de9b6113b183.png)
+![CleanShot 2023-03-26 at 22 12 19](https://user-images.githubusercontent.com/137158/227846570-94879315-143f-459e-b10c-ed441c0545b0.png)
 
-### Figuring out 3D models
+### Feature: 3D Eight Ball
 
-One place ChatGPT did not help is when I couldn't figure out how to work with the COLLADA model of the eight ball I had downloaded. Between my main View and another component which later became BallView, it really wasn't clear to me where to instantiate things. Pasting my code or error messages and saying "What's wrong" usually didn't help. It took a lot of debugging and reasoning and context to get the 3D model working.
+I found an eight ball model on Sketchfab and asked ChatGPT what to do next. It was spot on, with one exception -- ChatGPT said to use formats "such as" Collada and Alembic, so I was looking for Collada models. I didn't know until now that not only does SceneKit work great with USDZ models, but that USDZ was actually an Apple and Pixar invention, and everything on Sketchfab gets converted to USDZ automatically.
 
-### Animating the ball
+![CleanShot 2023-03-26 at 22 16 13](https://user-images.githubusercontent.com/137158/227847062-54b4acd8-f67f-4115-82f0-3b849bef38f3.png)
 
-What I _wanted_ but didn't get (as you can see from the video) is some kind of shake or rotation animation that didn't stink. No matter how hard I tried, I couldn't get a working example. ChatGPT got me really *close* however, and I think with enough time of diving into SceneKit I could probably figure the rest out. But there was a long time where ChatGPT gave me different kinds of solutions after subsequent questions, and many of them needed clarification or implementations of functions it made up (not that they were hard, like matrix multiplication). I feel like I spent a lot of time here and ChatGPT gave me a lot of solutions it thought would help. I learned a lot but didn't achieve my goal.
+Unfortunately, after this I had a lot of trouble figuring out SceneKit. ChatGPT wasn't very helpful here since this was a combination of my Swift/SceneKit inexperience and just general difficulty with APIs. For example, things I thought were problems with the model ended up being problems with my initialization and code paths. It was plain old debugging and code sleuthing for a while.
+
+### Feature: Animate the eight ball
+
+What I _wanted_ but didn't get was some kind of shake or rotation animation that jiggled the eight ball and let it settle back to its origin position. That would have been cool, right? But no matter how hard I tried, I couldn't get anything good working.
+
+ChatGPT got me really *close*, though, and with more time I could probably turn it into something, but my effort and motivation has hit its limit. ChatGPT gave me a lot of things involving rotation and scale, but none of them did exactly what I wanted, or they kept doing the animation _backwards_ for some reason, and switching the `from:` and `to:` parameters didn't seem to work. ChatGPT was pretty wild here, and for a while it would give me an entirely different solution every time I asked, and many of the the solutions were incomplete and used made-up functions. I learned a lot but didn't achieve my goal.
 
 Some examples:
 
@@ -180,13 +179,15 @@ Some examples:
 ![CleanShot 2023-03-26 at 20 41 19](https://user-images.githubusercontent.com/137158/227835353-9cd4f0e5-c8a5-4c22-9bfc-e0cceff3bcb8.png)
 ![CleanShot 2023-03-26 at 20 41 38](https://user-images.githubusercontent.com/137158/227835404-6a3b9ffd-171a-4aad-8342-1c206fca3c0a.png)
 
-### Final bits: Midjourney
+🤷
 
-I tried to come up with some interesting images in Midjourney. I really wanted some kind of interesting background for the app, some kind of weird mystical background with eight balls for the hypothetical app store listing, and I really wanted just a royalty-free magic eight ball image with the blue upside-down triangle for the watch app which can't use a 3D model.
+### Addendum: Midjourney
 
-Alas, I simply couldn't get a good magic eight ball image generated, or at least one with the triangle the way I wanted (like ▼ not ▲). So I took the best one it made, removed the background with [removal.ai](https://removal.ai/upload/), and trimmed transparent pixels with [Photopea](https://www.photopea.com/) because I still don't have the ImageMagick command memorized that does that.
+I used Midjourney to create some assets -- I wanted an interesting background for the app like a fortune telling parlor, some kind of weird mystical background with eight balls for the hypothetical app store listing, and I really wanted just a royalty-free magic eight ball image with the blue upside-down triangle for the watch app which can't use a 3D model.
 
-Here are some interesting bits in that process:
+Unfortunately, I simply couldn't get a good magic eight ball image generated, or at least one with the triangle the way I wanted (like ▼ not ▲). So I took the best one it made, removed the background with [removal.ai](https://removal.ai/upload/), and trimmed transparent pixels with [Photopea](https://www.photopea.com/).
+
+Here are highlights with my progress there along with some of my favorite things that Midjourney came up with:
 
 ![CleanShot 2023-03-26 at 20 45 07](https://user-images.githubusercontent.com/137158/227835827-1abba42b-0e28-4aca-bf12-52455ee4d19c.png)
 ![CleanShot 2023-03-26 at 20 45 19](https://user-images.githubusercontent.com/137158/227835851-ecf4ea91-f862-46db-bb44-30021571e94a.png)
@@ -201,11 +202,9 @@ Here are some interesting bits in that process:
 ![CleanShot 2023-03-26 at 20 46 59](https://user-images.githubusercontent.com/137158/227836070-7717d489-83d1-4c03-857a-83990761ca18.png)
 ![CleanShot 2023-03-26 at 20 47 05](https://user-images.githubusercontent.com/137158/227836088-cdacf406-f6dc-4998-ae6e-dbd598e45143.png)
 ![CleanShot 2023-03-26 at 20 47 17](https://user-images.githubusercontent.com/137158/227836114-6211d7eb-97f1-4b84-8cfc-020093721943.png)
-
 ![CleanShot 2023-03-26 at 20 47 25](https://user-images.githubusercontent.com/137158/227836129-d3ce78f2-bcf5-49bb-8328-9c518f37e297.png)
 ![CleanShot 2023-03-26 at 20 47 33](https://user-images.githubusercontent.com/137158/227836151-304d48c5-56d0-4a59-9f93-6d4788d419be.png)
 ![CleanShot 2023-03-26 at 20 47 41](https://user-images.githubusercontent.com/137158/227836201-daa1f0fb-e961-43b3-84c8-c112a1663878.png)
-
 ![CleanShot 2023-03-26 at 20 47 50](https://user-images.githubusercontent.com/137158/227836218-115e6d7f-4372-42b5-8689-f5cb021d7600.png)
 ![CleanShot 2023-03-26 at 20 47 55](https://user-images.githubusercontent.com/137158/227836230-26f27962-64d7-492a-a439-150feb429040.png)
 ![CleanShot 2023-03-26 at 20 48 02](https://user-images.githubusercontent.com/137158/227836241-b3ec44ba-69e0-4818-a06f-4cfaa67897cf.png)
