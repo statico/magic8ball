@@ -16,18 +16,6 @@ While "peer programming" with ChatGPT I found it to be about 75% useful. While n
 
 Overall, this feels like having a superpower. ChatGTP is like a mostly-knowledgable coworker telling me what to do (although sometimes getting it wrong) and saved me many hours of learning on my own.
 
-## Credits
-
-- Most of the Swift code was written by [ChatGPT 3.5](https://chat.openai.com/)
-- The orb image and background images for the app and screnshots were made by [Midjourney](https://www.midjourney.com/app/)
-- [water bottle shaked.ogg by pbimal](https://freesound.org/people/pbimal/sounds/646783/) is the shaking sound
-- [Magic eight ball.png](https://commons.wikimedia.org/wiki/File:Magic_eight_ball.png) from Wikimedia Commons was used mostly as a placeholder
-- [Eight Ball 3D model from RoutineStudio via Sketchfab](https://sketchfab.com/3d-models/eight-ball-24a32adaf6014528ad71a1de9af6b084)
-- [abstract ball 3D model by sonic art](https://www.turbosquid.com/3d-models/abstract-ball-3d-model-1737482#) was used as a placeholder
-- [iOS & Android App Icon Template](https://www.figma.com/community/file/994333518688155629) and [App Store Screenshots](https://www.figma.com/community/file/1071476530354359587) from the Figma community
-
-I couldn't find a usable, free magic 8-ball 3D model, so I used a nice regular 8-ball model.
-
 ## Development Log
 
 Here's an abridged list of the ChatGPT questions I asked in rough chronological order. I also had to ask a lot of clarifying questions or sometimes would ask it things instead of googling. These are the most notable bits.
@@ -46,24 +34,25 @@ I asked it to tell me how to build an Apple Watch app that would show one of the
 
 ![CleanShot 2023-03-26 at 21 25 01](https://user-images.githubusercontent.com/137158/227840625-b5e360ce-bf7c-47d5-9e56-122686104265.png)
 
-It gave me ObjC instructions at first, but then I told it I wanted to use Swift, and we were off. All of this worked and I had a working watch app that I could tap to display a random message.
+It gave me Objective-C instructions at first, but then I told it I wanted to use Swift, and we were off. **All of this worked and I had a working watch app that I could tap to display a random message.** This was very promising and I was excited!
 
 ![CleanShot 2023-03-26 at 13 50 48](https://user-images.githubusercontent.com/137158/227803918-a33dc450-ede4-424d-be1c-5ae08c2ce06d.png)
+
+I tried ChatGPT with some basic project setup questions and it was helpful:
+
 ![CleanShot 2023-03-26 at 13 53 32](https://user-images.githubusercontent.com/137158/227804033-b4af5274-4b6f-4c78-9325-c43003b402d0.png)
 ![CleanShot 2023-03-26 at 13 53 41](https://user-images.githubusercontent.com/137158/227804042-7eb339bb-8c7f-4e11-ae66-a4def16b7bd9.png)
 
-### Feature 1: Show a message when shaken
+### Feature: Add a delay before showing the message
 
-Picking a random element from an array and displaying it in a Text view after being tapped was easy. But I wanted to shake my watch like a magic 8 ball and get a new mystical response. The watch has a gyroscope so this should be possible.
-
-However, at the beginning of the project my knowledge of iOS and Swift was practically non-existant. It took me a lot of time to understand animations, threads, timers, contexts, and Swift closures. I wanted the message to appear after a delay and that took a lot of work to undestand. ChatGPT was helpful with generating code, but not helpful in teaching me about SwiftUI or whatever alien planet iOS/watchOS appears to have turned into.
+At the beginning of the project my knowledge of iOS and Swift was practically non-existant. It took me a lot of time to understand animations, threads, timers, contexts, and Swift closures. I wanted the message to appear after a delay and that took a lot of work to undestand. ChatGPT was helpful with generating code, but not helpful in teaching me about SwiftUI or whatever alien planet iOS/watchOS appears to have turned into.
 
 ![CleanShot 2023-03-26 at 13 56 12](https://user-images.githubusercontent.com/137158/227804168-fd346c24-5273-42e8-aae1-d8e76f37d355.png)
 ![CleanShot 2023-03-26 at 13 56 32](https://user-images.githubusercontent.com/137158/227804183-fd45a0d5-eddb-4fe4-84a4-cf4417627e60.png)
 ![CleanShot 2023-03-26 at 13 56 41](https://user-images.githubusercontent.com/137158/227804186-64710d40-053d-4389-a30f-349387e6632a.png)
 ![CleanShot 2023-03-26 at 13 56 52](https://user-images.githubusercontent.com/137158/227804197-4763d1fa-0c66-44ff-a956-dc6ae9b10a76.png)
 
-### Feature 2: Play a watery gurgling sound
+### Feature: Play a watery gurgling sound
 
 If you're shaking a container with liquid in it, it should sound like that, right? So I grabbed [something that sounded approximately right](https://freesound.org/people/pbimal/sounds/646783/), trimmed and faded it with Audacity, and exported it as.. wait, what formats are supported by Xcode? Let's ask!
 
@@ -76,15 +65,29 @@ Coding this was painful. First, ChatGPTs suggestions were out of date, then it w
 ![CleanShot 2023-03-26 at 13 58 29](https://user-images.githubusercontent.com/137158/227804277-1e2cf8f7-15c3-4883-9613-efd3929b553b.png)
 ![CleanShot 2023-03-26 at 13 58 44](https://user-images.githubusercontent.com/137158/227804289-4d02feae-9d9b-4491-ac10-23a55423e3bf.png)
 
-### Show a message when I shake the watch
+### Feature: Let me shake the watch to reveal an answer
 
-You're supposed to shake the magic 8-ball, so I wanted to be able to shake the watch. This is where ChatGPT really impressed me with its `magnitude` calculation. However, in reality, when you shake an Apple Watch it tends to deactivate because you're not looking at it and stop the animation. Also I didn't know enough SwiftUI to understand why everything was broken.
+Picking a random element from an array and displaying it in a Text view after being tapped was easy. But I wanted to shake my watch like a magic 8 ball and get a new mystical response. The watch has a gyroscope so this should be possible.
+
+ChatGPT nailed this by creating the `motionManager` and checking the `magnitude` of the motion. And it added it by adding it to (what it thought was) my existing code!
 
 ![CleanShot 2023-03-26 at 14 02 16](https://user-images.githubusercontent.com/137158/227804482-a744163e-0448-4d7e-a8c1-aa2ca6c59633.png)
-![CleanShot 2023-03-26 at 14 02 51](https://user-images.githubusercontent.com/137158/227804505-3250ee4f-5273-471b-9c97-754c46c9d90b.png)
-![CleanShot 2023-03-26 at 14 02 59](https://user-images.githubusercontent.com/137158/227804516-af33ab00-98d8-4dde-a7c3-e86ff11d6194.png)
+![CleanShot 2023-03-26 at 21 36 08](https://user-images.githubusercontent.com/137158/227841876-df30b698-8038-4a36-989f-612c6b633d70.png)
 
-### Teach me how to animate
+Later on for the iOS app, however, ChatGPT was _way_ off:
+
+![CleanShot 2023-03-26 at 21 37 55](https://user-images.githubusercontent.com/137158/227842086-2b3f35a8-f635-473f-8fd7-673c51d7dcce.png)
+![CleanShot 2023-03-26 at 21 38 03](https://user-images.githubusercontent.com/137158/227842102-aaa3436e-be4f-4b5f-8f37-123972b36c30.png)
+![CleanShot 2023-03-26 at 21 38 08](https://user-images.githubusercontent.com/137158/227842116-718d9b1e-287d-45ee-bfff-2f6586056436.png)
+![CleanShot 2023-03-26 at 21 38 11](https://user-images.githubusercontent.com/137158/227842124-60a84f76-6f83-43ed-af2d-4f55fc48f3d3.png)
+![CleanShot 2023-03-26 at 21 38 42](https://user-images.githubusercontent.com/137158/227842212-e8dccee7-447d-43e0-8a0a-e6b4862b2245.png)
+![CleanShot 2023-03-26 at 21 38 51](https://user-images.githubusercontent.com/137158/227842242-54ffc5fd-bcd9-47e0-be05-fea74d2b1a28.png)
+
+As far as I know, there's no such thing as `ShakeGesture` and googling didn't turn up anything. Hrmph. I ended up googling [someone else's solution](https://betterprogramming.pub/how-to-use-uiviewrepresentable-with-swiftui-7295bfec312b).
+
+### Feature: Animate the eight ball
+
+Hearing the water slooshing sound but not seeing anything move felt a little lifeless. So I wanted the eight ball image to jiggle a little when you asked for a new response.
 
 There was a lot of back and forth here and I started to get a little frustrated. There were probably ~15 back and forths with ChatGPT and three times I said something like "OK, forget all that, let's try again. Here's my code." Finally a breakthrough:
 
@@ -92,31 +95,25 @@ There was a lot of back and forth here and I started to get a little frustrated.
 ![CleanShot 2023-03-26 at 14 08 37](https://user-images.githubusercontent.com/137158/227804721-fe5923e9-57c8-4f58-b7e8-0ceff2de77d8.png)
 ![CleanShot 2023-03-26 at 14 08 42](https://user-images.githubusercontent.com/137158/227804730-5f54c22d-9f8e-48c3-9498-14ce5e3f31e7.png)
 
-I did this but it felt like I was helping ChatGPT cheat 🤣
+### Feature: Add some random variation to the sound
 
-![CleanShot 2023-03-26 at 14 09 33](https://user-images.githubusercontent.com/137158/227804765-223eb92b-e137-4a4a-ba30-9c91380fefa1.png)
-
-### Add some variation to the sound
-
-ChatGPT was totally wrong here. Per its instructions I went down a wrong path of trying to use `AVAudioUnitTimePitch`. I'm not sure if my code was wrong or if it's not possible on watchOS.
+Usually you want to add some variation to a sound if you're hearing it a lot so it doesn't sound robotic. Usually adding a little bit of random pitch offset helps. I asked ChatGPT, but it's responses were way off, and it made me go down a wrong path of trying to use `AVAudioUnitTimePitch`, which isn't available on watchOS. It's explanation of `audioPlayer.rate` is wrong and contradicts the explanation in [the official docs](https://developer.apple.com/documentation/avfaudio/avaudioplayer/1386118-rate).
 
 ![CleanShot 2023-03-26 at 14 09 43](https://user-images.githubusercontent.com/137158/227804776-68dc8307-aaab-4d9a-ab99-b59be60df593.png)
 ![CleanShot 2023-03-26 at 14 10 58](https://user-images.githubusercontent.com/137158/227804837-613d1cb4-354d-4c01-aa34-84245b9ec24d.png)
 
-### Trying to fix watch bugs
+This was too much work so I added a random rate (actually duration) offset and moved on.
 
-Dealing with activation/deactivation on the watch was annoying. I eventually scrapped the code, added lots of `print()`s, and at this point read [Learn X in Y Minutes (where X=Swift)](https://learnxinyminutes.com/docs/swift/) to try and learn things. ChatGPT gave me lots of ideas, many of which were wrong, so I spent a lot of time googling again. But at least I kind of had a sense of what to look for.
+### Bug: Apple Watch coding is difficult
+
+Dealing with activation/deactivation on the watch was annoying. I eventually scrapped the code, added lots of `print()`s, and at this point read [Learn X in Y Minutes (where X=Swift)](https://learnxinyminutes.com/docs/swift/) to try and learn things. ChatGPT gave me lots of ideas, so I spent a lot of time googling again. At least I was given some ideas of what to Google.
 
 ![CleanShot 2023-03-26 at 14 12 47](https://user-images.githubusercontent.com/137158/227804907-c7f1775f-a503-435f-8538-3edd8d0bb40f.png)
 ![CleanShot 2023-03-26 at 14 13 33](https://user-images.githubusercontent.com/137158/227804941-87ced4b6-c873-4ee2-b0da-333764342511.png)
 
-Later on this was helpful:
+### Bug: Timers
 
-![CleanShot 2023-03-26 at 14 14 34](https://user-images.githubusercontent.com/137158/227804985-890c53cf-b523-481e-b08a-eda3b9889bc7.png)
-
-### Timers
-
-ChatGPT successfully taught me about timers.
+ChatGPT successfully taught me about timers in Swift.
 
 ![CleanShot 2023-03-26 at 14 13 13](https://user-images.githubusercontent.com/137158/227804927-0bb3c8c4-6075-41ab-8535-daf4142d9ca6.png)
 
@@ -215,29 +212,15 @@ Here are some interesting bits in that process:
 ![CleanShot 2023-03-26 at 20 48 06](https://user-images.githubusercontent.com/137158/227836259-362e2673-06d0-4b83-9b0f-ea7bbcebcce6.png)
 ![CleanShot 2023-03-26 at 20 48 20](https://user-images.githubusercontent.com/137158/227836274-db9edb7c-002d-43ad-88cb-352de10d1fd1.png)
 
+## Credits
 
+- Most of the Swift code was written by [ChatGPT 3.5](https://chat.openai.com/)
+- The orb image and background images for the app and screnshots were made by [Midjourney](https://www.midjourney.com/app/)
+- [water bottle shaked.ogg by pbimal](https://freesound.org/people/pbimal/sounds/646783/) is the shaking sound
+- [Magic eight ball.png](https://commons.wikimedia.org/wiki/File:Magic_eight_ball.png) from Wikimedia Commons was used mostly as a placeholder
+- [Eight Ball 3D model from RoutineStudio via Sketchfab](https://sketchfab.com/3d-models/eight-ball-24a32adaf6014528ad71a1de9af6b084)
+- [abstract ball 3D model by sonic art](https://www.turbosquid.com/3d-models/abstract-ball-3d-model-1737482#) was used as a placeholder
+- [iOS & Android App Icon Template](https://www.figma.com/community/file/994333518688155629) and [App Store Screenshots](https://www.figma.com/community/file/1071476530354359587) from the Figma community
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+I couldn't find a usable, free magic 8-ball 3D model, so I used a nice regular 8-ball model.
 
