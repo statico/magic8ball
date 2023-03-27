@@ -139,7 +139,7 @@ But this helped me out, even if the syntax was off.
 
 ![CleanShot 2023-03-26 at 14 18 52](https://user-images.githubusercontent.com/137158/227805155-f2f856e7-e606-4a81-b46b-27d83a825a15.png)
 
-### Shaking on iOS
+### Shaking Gesture on iOS
 
 I still don't know how to handle this. ChatGPT wasn't helpful and I still don't know how to do it.
 
@@ -151,14 +151,66 @@ Then it made up something called `ShakeGesture`?
 
 ![CleanShot 2023-03-26 at 14 21 31](https://user-images.githubusercontent.com/137158/227805277-f5b04445-3401-49c6-8751-c826c287495e.png)
 
-
 ### Loading screen tweaks
 
 ChatGPT helped here, but only after two wrong answers.
 
 ![CleanShot 2023-03-26 at 14 20 40](https://user-images.githubusercontent.com/137158/227805238-f4a71b52-03c0-4c22-9335-f36b17fe745a.png)
 
-TODO: More
+### Customizing the view
+
+ChatGPT did a great job solving simple problems and modifying parts of my View. It was a lot easier to just ask ChatGPT, which already had my existing View code in context, to do something like change the font settings rather than google it and/or dig through code completion or docs. This was one of my favorite parts of using it because I felt like it was talking to an expert — or at least someone who had read a million tutorials and documentation pages ;)
+
+![CleanShot 2023-03-26 at 20 35 15](https://user-images.githubusercontent.com/137158/227834640-d1062e05-c77d-43e9-84f6-6a11812520de.png)
+![CleanShot 2023-03-26 at 20 35 30](https://user-images.githubusercontent.com/137158/227834664-6c80bca5-56d7-4137-b2b4-699f9989d4ec.png)
+![CleanShot 2023-03-26 at 20 35 56](https://user-images.githubusercontent.com/137158/227834726-b4f4ca02-0c8e-446f-8d38-de9b6113b183.png)
+
+### Figuring out 3D models
+
+One place ChatGPT did not help is when I couldn't figure out how to work with the COLLADA model of the eight ball I had downloaded. Between my main View and another component which later became BallView, it really wasn't clear to me where to instantiate things. Pasting my code or error messages and saying "What's wrong" usually didn't help. It took a lot of debugging and reasoning and context to get the 3D model working.
+
+### Animating the ball
+
+What I _wanted_ but didn't get (as you can see from the video) is some kind of shake or rotation animation that didn't stink. No matter how hard I tried, I couldn't get a working example. ChatGPT got me really *close* however, and I think with enough time of diving into SceneKit I could probably figure the rest out. But there was a long time where ChatGPT gave me different kinds of solutions after subsequent questions, and many of them needed clarification or implementations of functions it made up (not that they were hard, like matrix multiplication). I feel like I spent a lot of time here and ChatGPT gave me a lot of solutions it thought would help. I learned a lot but didn't achieve my goal.
+
+Some examples:
+
+![CleanShot 2023-03-26 at 20 41 11](https://user-images.githubusercontent.com/137158/227835335-15c0062a-40f1-494a-b727-479a49e501a4.png)
+![CleanShot 2023-03-26 at 20 41 19](https://user-images.githubusercontent.com/137158/227835353-9cd4f0e5-c8a5-4c22-9bfc-e0cceff3bcb8.png)
+![CleanShot 2023-03-26 at 20 41 38](https://user-images.githubusercontent.com/137158/227835404-6a3b9ffd-171a-4aad-8342-1c206fca3c0a.png)
+
+### Final bits: Midjourney
+
+I tried to come up with some interesting images in Midjourney. I really wanted some kind of interesting background for the app, some kind of weird mystical background with eight balls for the hypothetical app store listing, and I really wanted just a royalty-free magic eight ball image with the blue upside-down triangle for the watch app which can't use a 3D model.
+
+Alas, I simply couldn't get a good magic eight ball image generated, or at least one with the triangle the way I wanted (like ▼ not ▲). So I took the best one it made, removed the background with [removal.ai](https://removal.ai/upload/), and trimmed transparent pixels with [Photopea](https://www.photopea.com/) because I still don't have the ImageMagick command memorized that does that.
+
+Here are some interesting bits in that process:
+
+![CleanShot 2023-03-26 at 20 45 07](https://user-images.githubusercontent.com/137158/227835827-1abba42b-0e28-4aca-bf12-52455ee4d19c.png)
+![CleanShot 2023-03-26 at 20 45 19](https://user-images.githubusercontent.com/137158/227835851-ecf4ea91-f862-46db-bb44-30021571e94a.png)
+![CleanShot 2023-03-26 at 20 45 30](https://user-images.githubusercontent.com/137158/227835864-fedf8ccd-f173-44b0-9e70-f06e4fd2f0ca.png)
+![CleanShot 2023-03-26 at 20 45 40](https://user-images.githubusercontent.com/137158/227835902-ef7447fa-8653-4922-af1a-6a147a8541a4.png)
+![CleanShot 2023-03-26 at 20 45 58](https://user-images.githubusercontent.com/137158/227835929-dae64fa7-ecc9-4a2d-9015-48d78cdf7a1b.png)
+![CleanShot 2023-03-26 at 20 46 04](https://user-images.githubusercontent.com/137158/227835948-6db58831-d2d9-4008-8193-49f0deb78e8e.png)
+![CleanShot 2023-03-26 at 20 46 09](https://user-images.githubusercontent.com/137158/227835957-e8ca44a8-b68c-47a4-be93-146e20b02f45.png)
+![CleanShot 2023-03-26 at 20 46 25](https://user-images.githubusercontent.com/137158/227835987-a6da7054-e60b-45d9-bf64-7472f03fc427.png)
+![CleanShot 2023-03-26 at 20 46 43](https://user-images.githubusercontent.com/137158/227836045-86624a78-a155-49bc-aa05-c9d254c3bbc6.png)
+![CleanShot 2023-03-26 at 20 46 53](https://user-images.githubusercontent.com/137158/227836061-8f942d3b-4b24-4d9e-a6c0-a6de545d67af.png)
+![CleanShot 2023-03-26 at 20 46 59](https://user-images.githubusercontent.com/137158/227836070-7717d489-83d1-4c03-857a-83990761ca18.png)
+![CleanShot 2023-03-26 at 20 47 05](https://user-images.githubusercontent.com/137158/227836088-cdacf406-f6dc-4998-ae6e-dbd598e45143.png)
+![CleanShot 2023-03-26 at 20 47 17](https://user-images.githubusercontent.com/137158/227836114-6211d7eb-97f1-4b84-8cfc-020093721943.png)
+
+![CleanShot 2023-03-26 at 20 47 25](https://user-images.githubusercontent.com/137158/227836129-d3ce78f2-bcf5-49bb-8328-9c518f37e297.png)
+![CleanShot 2023-03-26 at 20 47 33](https://user-images.githubusercontent.com/137158/227836151-304d48c5-56d0-4a59-9f93-6d4788d419be.png)
+![CleanShot 2023-03-26 at 20 47 41](https://user-images.githubusercontent.com/137158/227836201-daa1f0fb-e961-43b3-84c8-c112a1663878.png)
+
+![CleanShot 2023-03-26 at 20 47 50](https://user-images.githubusercontent.com/137158/227836218-115e6d7f-4372-42b5-8689-f5cb021d7600.png)
+![CleanShot 2023-03-26 at 20 47 55](https://user-images.githubusercontent.com/137158/227836230-26f27962-64d7-492a-a439-150feb429040.png)
+![CleanShot 2023-03-26 at 20 48 02](https://user-images.githubusercontent.com/137158/227836241-b3ec44ba-69e0-4818-a06f-4cfaa67897cf.png)
+![CleanShot 2023-03-26 at 20 48 06](https://user-images.githubusercontent.com/137158/227836259-362e2673-06d0-4b83-9b0f-ea7bbcebcce6.png)
+![CleanShot 2023-03-26 at 20 48 20](https://user-images.githubusercontent.com/137158/227836274-db9edb7c-002d-43ad-88cb-352de10d1fd1.png)
+
 
 
 
